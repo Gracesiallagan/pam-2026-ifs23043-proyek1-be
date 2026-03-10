@@ -1,0 +1,132 @@
+### Base URL
+@baseUrl = http://localhost:8000
+@token = YOUR_ACCESS_TOKEN_HERE
+
+### ==================== AUTH ====================
+
+### Register
+POST {{baseUrl}}/auth/register
+Content-Type: application/json
+
+{
+  "name": "Budi Santoso",
+  "username": "budi",
+  "password": "password123"
+}
+
+### Login
+POST {{baseUrl}}/auth/login
+Content-Type: application/json
+
+{
+  "username": "budi",
+  "password": "password123"
+}
+
+### Refresh Token
+POST {{baseUrl}}/auth/refresh-token
+Content-Type: application/json
+
+{
+  "refreshToken": "YOUR_REFRESH_TOKEN"
+}
+
+### Logout
+POST {{baseUrl}}/auth/logout
+Authorization: Bearer {{token}}
+
+### ==================== USER ====================
+
+### Get My Profile
+GET {{baseUrl}}/users/me
+Authorization: Bearer {{token}}
+
+### Update My Profile
+PUT {{baseUrl}}/users/me
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "name": "Budi Santoso Updated",
+  "bio": "Suka memasak masakan Indonesia"
+}
+
+### Update My Password
+PUT {{baseUrl}}/users/me/password
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "oldPassword": "password123",
+  "newPassword": "newpassword456"
+}
+
+### ==================== RECIPES ====================
+
+### Get All Recipes (with pagination)
+GET {{baseUrl}}/recipes?page=1&perPage=10
+Authorization: Bearer {{token}}
+
+### Get All Recipes (with search)
+GET {{baseUrl}}/recipes?search=nasi&page=1&perPage=10
+Authorization: Bearer {{token}}
+
+### Get All Recipes (filter by category)
+GET {{baseUrl}}/recipes?category=makanan&page=1&perPage=10
+Authorization: Bearer {{token}}
+
+### Get All Recipes (filter by difficulty)
+GET {{baseUrl}}/recipes?difficulty=mudah&page=1&perPage=10
+Authorization: Bearer {{token}}
+
+### Get Recipe Stats
+GET {{baseUrl}}/recipes/stats
+Authorization: Bearer {{token}}
+
+### Get Recipe by ID
+GET {{baseUrl}}/recipes/RECIPE_ID_HERE
+Authorization: Bearer {{token}}
+
+### Create Recipe
+POST {{baseUrl}}/recipes
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "title": "Nasi Goreng Spesial",
+  "description": "Nasi goreng dengan rasa yang lezat dan gurih khas Indonesia",
+  "ingredients": "2 piring nasi putih\n2 siung bawang putih\n3 siung bawang merah\n2 buah cabai merah\n2 sdm kecap manis\n1 sdm saus tiram\nGaram dan merica secukupnya\n2 butir telur\nMinyak goreng",
+  "steps": "1. Panaskan minyak, tumis bawang putih dan bawang merah hingga harum\n2. Masukkan cabai, tumis sebentar\n3. Masukkan telur, orak-arik\n4. Masukkan nasi, aduk rata\n5. Tambahkan kecap manis, saus tiram, garam, dan merica\n6. Aduk rata dan sajikan",
+  "category": "makanan",
+  "difficulty": "mudah",
+  "cookingTime": 15,
+  "servings": 2
+}
+
+### Update Recipe
+PUT {{baseUrl}}/recipes/RECIPE_ID_HERE
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "title": "Nasi Goreng Spesial Updated",
+  "description": "Nasi goreng dengan rasa yang lebih lezat",
+  "ingredients": "2 piring nasi putih\n2 siung bawang putih\nGaram secukupnya",
+  "steps": "1. Tumis bawang\n2. Masukkan nasi\n3. Sajikan",
+  "category": "makanan",
+  "difficulty": "mudah",
+  "cookingTime": 15,
+  "servings": 2
+}
+
+### Delete Recipe
+DELETE {{baseUrl}}/recipes/RECIPE_ID_HERE
+Authorization: Bearer {{token}}
+
+### ==================== IMAGES ====================
+
+### Get User Photo
+GET {{baseUrl}}/images/users/USER_ID_HERE
+
+### Get Recipe Cover
+GET {{baseUrl}}/images/recipes/RECIPE_ID_HERE
