@@ -246,7 +246,13 @@ class RecipeService(
             throw AppException(404, "Cover resep tidak tersedia")
         }
 
-        call.respondFile(file)
+        val contentType = when (file.extension.lowercase()) {
+            "jpg", "jpeg" -> ContentType.Image.JPEG
+            "png" -> ContentType.Image.PNG
+            "webp" -> ContentType.parse("image/webp")
+            else -> ContentType.Image.JPEG
+        }
+        call.respondBytes(file.readBytes(), contentType)
     }
 
     // Mengambil statistik resep

@@ -1,5 +1,6 @@
 package org.delcom.services
 
+import io.ktor.http.ContentType
 import io.ktor.http.HttpStatusCode
 import io.ktor.http.content.*
 import io.ktor.server.application.*
@@ -214,6 +215,12 @@ class UserService(
             throw AppException(404, "Photo profile tidak tersedia")
         }
 
-        call.respondFile(file)
+        val contentType = when (file.extension.lowercase()) {
+            "jpg", "jpeg" -> ContentType.Image.JPEG
+            "png" -> ContentType.Image.PNG
+            "webp" -> ContentType.parse("image/webp")
+            else -> ContentType.Image.JPEG
+        }
+        call.respondBytes(file.readBytes(), contentType)
     }
 }
